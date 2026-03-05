@@ -1,0 +1,98 @@
+.vision-mission {
+  padding: 8rem 2rem;
+  background: #09090b;
+  position: relative;
+}
+
+.vision-mission__container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.vision-mission__card {
+  position: relative;
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vision-mission__card:hover {
+  border-color: rgba(99, 102, 241, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+
+.vision-mission__icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(99, 102, 241, 0.08);
+  color: #818cf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+
+.vision-mission__icon-wrap--pink {
+  background: rgba(236, 72, 153, 0.08);
+  color: #f472b6;
+}
+
+.vision-mission__card h3 {
+  color: #fafafa;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+.vision-mission__card p {
+  color: #71717a;
+  font-size: 0.98rem;
+  line-height: 1.85;
+}
+
+.vision-mission__glow {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.4s;
+}
+
+.vision-mission__card:hover .vision-mission__glow {
+  opacity: 1;
+}
+
+.vision-mission__glow--purple {
+  background: rgba(99, 102, 241, 0.1);
+  bottom: -80px;
+  right: -80px;
+}
+
+.vision-mission__glow--pink {
+  background: rgba(236, 72, 153, 0.1);
+  bottom: -80px;
+  right: -80px;
+}
+
+@media (max-width: 768px) {
+  .vision-mission__container {
+    grid-template-columns: 1fr;
+  }
+
+  .vision-mission__card {
+    padding: 2rem 1.5rem;
+  }
+}
