@@ -12,7 +12,7 @@ const EVENT_TYPES = ["Solo", "Team"];
 const EMPTY_FORM = {
   title: "", description: "", event_date: "", location: "",
   poster_image: "", category: "Workshop", registration_link: "", max_participants: 100,
-  reg_no: "", event_type: "Solo",
+  event_type: "Solo", team_size: 2,
 };
 
 function EventForm({ initial, onSave, onClose }) {
@@ -83,7 +83,6 @@ function EventForm({ initial, onSave, onClose }) {
               { name: "event_date", label: "Event Date & Time", type: "datetime-local", required: true },
               { name: "max_participants", label: "Max Participants", type: "number" },
               { name: "registration_link", label: "External Registration Link", type: "url" },
-              { name: "reg_no", label: "Registration Number / ID", type: "text" },
             ].map(({ name, label, type, required }) => (
               <div key={name} className={name === "title" ? "md:col-span-2" : ""}>
                 <label className="block text-xs font-medium text-white/60 mb-1.5">{label}</label>
@@ -108,6 +107,17 @@ function EventForm({ initial, onSave, onClose }) {
                 {EVENT_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
             </div>
+            {form.event_type === "Team" && (
+              <div>
+                <label className="block text-xs font-medium text-white/60 mb-1.5">Members per Team</label>
+                <input
+                  type="number" name="team_size" min={2} max={20}
+                  value={form.team_size || 2} onChange={handleChange}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm outline-none focus:ring-2 focus:ring-brand-500/40"
+                />
+                <p className="text-white/30 text-xs mt-1">Including the team leader</p>
+              </div>
+            )}
           </div>
           <div>
             <label className="block text-xs font-medium text-white/60 mb-1.5">Description</label>

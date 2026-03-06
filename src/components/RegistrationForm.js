@@ -7,14 +7,24 @@ import toast from "react-hot-toast";
 const YEARS = ["1st Year", "2nd Year", "3rd Year", "4th Year", "PG"];
 
 export function RegistrationForm({ event, onClose }) {
+  const isTeam = event.event_type === "Team";
+  const extraMembers = isTeam ? Math.max((event.team_size || 2) - 1, 1) : 0;
+
   const [form, setForm] = useState({
     name: "", email: "", phone: "", college: "", department: "", year: "", reg_no: ""
   });
+  const [teamMembers, setTeamMembers] = useState(
+    Array.from({ length: extraMembers }, () => ({ name: "", reg_no: "" }))
+  );
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleMemberChange = (index, field, value) => {
+    setTeamMembers((prev) => prev.map((m, i) => i === index ? { ...m, [field]: value } : m));
   };
 
   const handleSubmit = async (e) => {
@@ -24,6 +34,7 @@ export function RegistrationForm({ event, onClose }) {
       const { error } = await supabase.from("registrations").insert({
         event_id: event.id,
         ...form,
+        team_members: isTeam ? teamMembers : null,
       });
       if (error) throw error;
       setSuccess(true);
@@ -132,6 +143,36 @@ export function RegistrationForm({ event, onClose }) {
                 </select>
               </div>
             </div>
+
+            {isTeam && (
+              <div className="space-y-3 pt-1">
+                <p className="text-sm font-semibold text-gray-700 dark:text-white/80 border-t border-gray-100 dark:border-white/10 pt-3">
+                  Team Members
+                  <span className="ml-2 text-xs font-normal text-gray-400 dark:text-white/40">
+                    ({extraMembers} additional member{extraMembers > 1 ? "s" : ""})
+                  </span>
+                </p>
+                {teamMembers.map((member, idx) => (
+                  <div key={idx} className="rounded-xl border border-gray-200 dark:border-white/10 p-3 space-y-2">
+                    <p className="text-xs font-medium text-gray-500 dark:text-white/40">Member {idx + 2}</p>
+                    <input
+                      type="text"
+                      placeholder="Full Name"
+                      value={member.name}
+                      onChange={(e) => handleMemberChange(idx, "name", e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 outline-none transition"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Register Number"
+                      value={member.reg_no}
+                      onChange={(e) => handleMemberChange(idx, "reg_no", e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 outline-none transition"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
 
             <button
               type="submit"
