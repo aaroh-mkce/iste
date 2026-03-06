@@ -12,7 +12,7 @@ function exportCSV(rows, eventTitle) {
     headers.join(","),
     ...rows.map((r) => {
       const members = Array.isArray(r.team_members)
-        ? r.team_members.map((m) => `${m.name || ""}${m.reg_no ? ` (${m.reg_no})` : ""}`).join("; ")
+        ? r.team_members.map((m) => `${m.name || ""}${m.email ? ` <${m.email}>` : ""}${m.reg_no ? ` (${m.reg_no})` : ""}`).join("; ")
         : "";
       return [r.name, r.reg_no, r.email, r.phone, r.college, r.department, r.year, members,
         format(new Date(r.created_at), "dd/MM/yyyy HH:mm")]
@@ -153,6 +153,9 @@ export function AdminRegistrations() {
                               {r.team_members.map((m, i) => (
                                 <div key={i} className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-sm">
                                   <span className="text-white">{m.name || "—"}</span>
+                                  {m.email && (
+                                    <span className="ml-2 text-white/50 text-xs">{m.email}</span>
+                                  )}
                                   {m.reg_no && (
                                     <span className="ml-2 text-white/40 text-xs">{m.reg_no}</span>
                                   )}

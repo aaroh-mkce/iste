@@ -14,7 +14,7 @@ export function RegistrationForm({ event, onClose }) {
     name: "", email: "", phone: "", college: "", department: "", year: "", reg_no: ""
   });
   const [teamMembers, setTeamMembers] = useState(
-    Array.from({ length: extraMembers }, () => ({ name: "", reg_no: "" }))
+    Array.from({ length: extraMembers }, () => ({ name: "", email: "", reg_no: "" }))
   );
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -160,6 +160,13 @@ export function RegistrationForm({ event, onClose }) {
                       placeholder="Full Name"
                       value={member.name}
                       onChange={(e) => handleMemberChange(idx, "name", e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 outline-none transition"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Email Address"
+                      value={member.email}
+                      onChange={(e) => handleMemberChange(idx, "email", e.target.value)}
                       className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 outline-none transition"
                     />
                     <input
