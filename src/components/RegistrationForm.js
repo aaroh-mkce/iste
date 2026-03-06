@@ -11,7 +11,7 @@ export function RegistrationForm({ event, onClose }) {
   const extraMembers = isTeam ? Math.max((event.team_size || 2) - 1, 1) : 0;
 
   const [form, setForm] = useState({
-    name: "", email: "", phone: "", college: "", department: "", year: "", reg_no: ""
+    name: "", email: "", phone: "", college: "", department: "", year: "", reg_no: "", team_name: ""
   });
   const [teamMembers, setTeamMembers] = useState(
     Array.from({ length: extraMembers }, () => ({ name: "", email: "", reg_no: "" }))
@@ -34,6 +34,7 @@ export function RegistrationForm({ event, onClose }) {
       const { error } = await supabase.from("registrations").insert({
         event_id: event.id,
         ...form,
+        team_name: isTeam ? form.team_name : null,
         team_members: isTeam ? teamMembers : null,
       });
       if (error) throw error;
@@ -147,6 +148,23 @@ export function RegistrationForm({ event, onClose }) {
             {isTeam && (
               <div className="space-y-3 pt-1">
                 <p className="text-sm font-semibold text-gray-700 dark:text-white/80 border-t border-gray-100 dark:border-white/10 pt-3">
+                  Team Details
+                </p>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                    Team Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="team_name"
+                    value={form.team_name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter your team name"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 outline-none transition"
+                  />
+                </div>
+                <p className="text-sm font-semibold text-gray-700 dark:text-white/80">
                   Team Members
                   <span className="ml-2 text-xs font-normal text-gray-400 dark:text-white/40">
                     ({extraMembers} additional member{extraMembers > 1 ? "s" : ""})

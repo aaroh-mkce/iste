@@ -7,14 +7,14 @@ import { format } from "date-fns";
 
 function exportCSV(rows, eventTitle) {
   if (!rows.length) return;
-  const headers = ["Name", "Reg No", "Email", "Phone", "College", "Department", "Year", "Team Members", "Registered At"];
+  const headers = ["Name", "Reg No", "Email", "Phone", "College", "Department", "Year", "Team Name", "Team Members", "Registered At"];
   const csvRows = [
     headers.join(","),
     ...rows.map((r) => {
       const members = Array.isArray(r.team_members)
         ? r.team_members.map((m) => `${m.name || ""}${m.email ? ` <${m.email}>` : ""}${m.reg_no ? ` (${m.reg_no})` : ""}`).join("; ")
         : "";
-      return [r.name, r.reg_no, r.email, r.phone, r.college, r.department, r.year, members,
+      return [r.name, r.reg_no, r.email, r.phone, r.college, r.department, r.year, r.team_name, members,
         format(new Date(r.created_at), "dd/MM/yyyy HH:mm")]
         .map((v) => `"${(v || "").replace(/"/g, '""')}"`)
         .join(",");
@@ -126,7 +126,9 @@ export function AdminRegistrations() {
                         <td className="px-4 py-3 text-white font-medium">
                           {r.name}
                           {hasTeam && (
-                            <span className="ml-2 px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 text-xs">Team</span>
+                            <span className="ml-2 px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 text-xs">
+                              {r.team_name ? r.team_name : "Team"}
+                            </span>
                           )}
                         </td>
                         <td className="px-4 py-3 text-white/60">{r.reg_no || "—"}</td>
