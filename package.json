@@ -2,7 +2,7 @@
   "name": "iste",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://YOUR_GITHUB_USERNAME.github.io/iste",
+  "homepage": "https://aaroh-mkce.github.io/iste",
   "dependencies": {
     "@headlessui/react": "^2.2.9",
     "@heroicons/react": "^2.2.0",
