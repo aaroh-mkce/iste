@@ -7,7 +7,7 @@ import { EventsSection } from "../sections/EventsSection";
 import { TeamSection } from "../sections/TeamSection";
 import { GallerySection } from "../sections/GallerySection";
 import { AnnouncementsSection } from "../sections/AnnouncementsSection";
-import { CertificatesSection } from "../sections/CertificatesSection";
+import { SponsorsSection } from "../sections/SponsorsSection";
 import { FeedbackSection } from "../sections/FeedbackSection";
 import { ContactSection } from "../sections/ContactSection";
 
@@ -23,7 +23,7 @@ export function HomePage() {
         <GallerySection />
         <TeamSection />
         <EventsSection type="past" />
-        <CertificatesSection />
+        <SponsorsSection />
         <FeedbackSection />
         <ContactSection />
       </main>

@@ -7,7 +7,7 @@ import {
   UsersIcon,
   PhotoIcon,
   ChatBubbleLeftIcon,
-  AcademicCapIcon,
+  StarIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
@@ -16,7 +16,7 @@ const STAT_CARDS = [
   { label: "Registrations", icon: UsersIcon, table: "registrations", color: "from-brand-500 to-purple-600", link: "/admin/registrations" },
   { label: "Gallery Photos", icon: PhotoIcon, table: "gallery", color: "from-pink-500 to-rose-600", link: "/admin/gallery" },
   { label: "Team Members", icon: UsersIcon, table: "team_members", color: "from-amber-500 to-orange-600", link: "/admin/team" },
-  { label: "Certificates", icon: AcademicCapIcon, table: "certificates", color: "from-green-500 to-teal-600", link: "/admin/certificates" },
+  { label: "Sponsors", icon: StarIcon, table: "sponsors", color: "from-green-500 to-teal-600", link: "/admin/sponsors" },
   { label: "Feedback", icon: ChatBubbleLeftIcon, table: "feedback", color: "from-violet-500 to-purple-600", link: "/admin/feedback" },
 ];
 
