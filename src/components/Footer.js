@@ -1,75 +1,47 @@
-import React from 'react';
-import { FaInstagram, FaLinkedin, FaGithub } from 'react-icons/fa';
-import Marquee from './Marquee';
-import './Footer.css';
+import React from "react";
+import { Link } from "react-router-dom";
 
-const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'Events', href: '#events' },
-  { label: 'Team', href: '#team' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Certificates', href: '#certificates' },
-  { label: 'Feedback', href: '#feedback' },
-];
-
-const marqueeWords = ['ISTE', 'SIST', 'INNOVATE', 'BUILD', 'LEARN', 'CREATE', 'ENGINEER', 'COLLABORATE'];
-
-export default function Footer() {
-  const handleClick = (e, href) => {
-    e.preventDefault();
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
+export function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer__marquee-strip">
-        <Marquee speed={30} direction="left">
-          {marqueeWords.map((word, i) => (
-            <span key={i} className="footer__marquee-word">
-              {word} <span className="footer__marquee-dot">·</span>
-            </span>
-          ))}
-        </Marquee>
-      </div>
-
-      <div className="footer__container">
-        <div className="footer__top">
-          <div className="footer__brand">
-            <span className="footer__logo">ISTE</span>
-            <p className="footer__tagline">
-              Empowering future engineers through innovation, collaboration, and technical excellence.
-            </p>
-            <div className="footer__socials">
-              <a href="https://instagram.com" className="footer__social" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-              <a href="https://linkedin.com" className="footer__social" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
-              <a href="https://github.com" className="footer__social" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
+    <footer className="py-12 bg-dark-900 border-t border-white/5">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid sm:grid-cols-3 gap-8 mb-8">
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center">
+                <span className="text-white font-bold text-xs">IS</span>
+              </div>
+              <span className="font-poppins font-bold text-white">ISTE Chapter</span>
             </div>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              Indian Society for Technical Education Student Chapter — empowering tomorrow's innovators.
+            </p>
           </div>
-
-          <div className="footer__links-section">
-            <h4>Links</h4>
-            <ul>
-              {navLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} onClick={(e) => handleClick(e, link.href)}>
-                    {link.label}
+          <div>
+            <h4 className="font-semibold text-white text-sm mb-3">Quick Links</h4>
+            <ul className="space-y-2 text-sm text-gray-500">
+              {["#about", "#events", "#team", "#gallery", "#contact"].map((href) => (
+                <li key={href}>
+                  <a href={href} className="hover:text-brand-400 transition-colors capitalize">
+                    {href.replace("#", "")}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
-
-          <div className="footer__contact-section">
-            <h4>Contact</h4>
-            <p>Sathyabama Institute, Chennai, Tamil Nadu</p>
-            <p>iste@sathyabama.ac.in</p>
+          <div>
+            <h4 className="font-semibold text-white text-sm mb-3">Admin</h4>
+            <ul className="space-y-2 text-sm text-gray-500">
+              <li>
+                <Link to="/admin" className="hover:text-brand-400 transition-colors">
+                  Admin Dashboard
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
-
-        <div className="footer__bottom">
-          <p>© {new Date().getFullYear()} ISTE-SIST Student Chapter</p>
+        <div className="border-t border-white/5 pt-6 text-center text-xs text-gray-600">
+          © {new Date().getFullYear()} ISTE Student Chapter. All rights reserved.
         </div>
       </div>
     </footer>
