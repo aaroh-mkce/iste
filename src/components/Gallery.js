@@ -26,12 +26,8 @@ export default function Gallery() {
     async function fetchGallery() {
       try {
         const { data, error } = await supabase.from('gallery').select('*').order('created_at', { ascending: false });
-        if (data && !error && data.length > 0) {
-          setImages(data);
-        }
-      } catch (e) {
-        // Use fallback data
-      }
+        if (data && !error && data.length > 0) setImages(data);
+      } catch (e) { /* fallback */ }
     }
     fetchGallery();
   }, []);
@@ -80,18 +76,17 @@ export default function Gallery() {
                 key={img.id || i}
                 className="gallery__item"
                 layout
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.4 }}
-                whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
                 onClick={() => img.image_url && setLightbox(img)}
               >
                 {img.image_url ? (
                   <img src={img.image_url} alt={img.title} className="gallery__image" />
                 ) : (
                   <div className="gallery__placeholder">
-                    <HiPhotograph size={40} />
+                    <HiPhotograph size={36} />
                     <span>{img.title}</span>
                   </div>
                 )}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiMenuAlt3, HiX } from 'react-icons/hi';
+import { HiMenuAlt3, HiX, HiMoon, HiSun } from 'react-icons/hi';
+import { useTheme } from '../contexts/ThemeContext';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 const navLinks = [
@@ -16,6 +18,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { dark, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -26,8 +29,7 @@ export default function Navbar() {
   const handleClick = (e, href) => {
     e.preventDefault();
     setMobileOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -35,35 +37,33 @@ export default function Navbar() {
       className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      transition={{ duration: 0.6 }}
     >
       <div className="navbar__container">
         <a href="#home" className="navbar__logo" onClick={(e) => handleClick(e, '#home')}>
           <span className="navbar__logo-icon">ISTE</span>
-          <span className="navbar__logo-text">SIST Chapter</span>
         </a>
 
         <div className="navbar__links">
           {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="navbar__link"
-              onClick={(e) => handleClick(e, link.href)}
-            >
+            <a key={link.name} href={link.href} className="navbar__link" onClick={(e) => handleClick(e, link.href)}>
               {link.name}
-              <span className="navbar__link-underline" />
             </a>
           ))}
+          <Link to="/admin" className="navbar__link navbar__link--admin">Admin</Link>
+          <button className="navbar__theme-btn" onClick={toggleTheme} aria-label="Toggle theme">
+            {dark ? <HiSun size={18} /> : <HiMoon size={18} />}
+          </button>
         </div>
 
-        <button
-          className="navbar__mobile-toggle"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <HiX size={28} /> : <HiMenuAlt3 size={28} />}
-        </button>
+        <div className="navbar__mobile-actions">
+          <button className="navbar__theme-btn" onClick={toggleTheme} aria-label="Toggle theme">
+            {dark ? <HiSun size={18} /> : <HiMoon size={18} />}
+          </button>
+          <button className="navbar__mobile-toggle" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">
+            {mobileOpen ? <HiX size={24} /> : <HiMenuAlt3 size={24} />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -73,7 +73,6 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
           >
             {navLinks.map((link, i) => (
               <motion.a
@@ -83,11 +82,14 @@ export default function Navbar() {
                 onClick={(e) => handleClick(e, link.href)}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.05 }}
+                transition={{ delay: i * 0.04 }}
               >
                 {link.name}
               </motion.a>
             ))}
+            <Link to="/admin" className="navbar__mobile-link" onClick={() => setMobileOpen(false)}>
+              Admin
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

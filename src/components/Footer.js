@@ -1,6 +1,6 @@
 import React from 'react';
-import { HiHeart, HiMail, HiLocationMarker } from 'react-icons/hi';
 import { FaInstagram, FaLinkedin, FaGithub } from 'react-icons/fa';
+import Marquee from './Marquee';
 import './Footer.css';
 
 const navLinks = [
@@ -13,6 +13,8 @@ const navLinks = [
   { label: 'Feedback', href: '#feedback' },
 ];
 
+const marqueeWords = ['ISTE', 'SIST', 'INNOVATE', 'BUILD', 'LEARN', 'CREATE', 'ENGINEER', 'COLLABORATE'];
+
 export default function Footer() {
   const handleClick = (e, href) => {
     e.preventDefault();
@@ -22,14 +24,20 @@ export default function Footer() {
 
   return (
     <footer className="footer">
-      <div className="footer__glow" />
+      <div className="footer__marquee-strip">
+        <Marquee speed={30} direction="left">
+          {marqueeWords.map((word, i) => (
+            <span key={i} className="footer__marquee-word">
+              {word} <span className="footer__marquee-dot">·</span>
+            </span>
+          ))}
+        </Marquee>
+      </div>
+
       <div className="footer__container">
         <div className="footer__top">
           <div className="footer__brand">
-            <div className="footer__logo">
-              <span className="footer__logo-text">ISTE</span>
-              <span className="footer__logo-sub">SIST Student Chapter</span>
-            </div>
+            <span className="footer__logo">ISTE</span>
             <p className="footer__tagline">
               Empowering future engineers through innovation, collaboration, and technical excellence.
             </p>
@@ -41,7 +49,7 @@ export default function Footer() {
           </div>
 
           <div className="footer__links-section">
-            <h4>Quick Links</h4>
+            <h4>Links</h4>
             <ul>
               {navLinks.map((link) => (
                 <li key={link.label}>
@@ -55,22 +63,13 @@ export default function Footer() {
 
           <div className="footer__contact-section">
             <h4>Contact</h4>
-            <div className="footer__contact-item">
-              <HiLocationMarker />
-              <span>Sathyabama Institute, Chennai, Tamil Nadu</span>
-            </div>
-            <div className="footer__contact-item">
-              <HiMail />
-              <span>iste@sathyabama.ac.in</span>
-            </div>
+            <p>Sathyabama Institute, Chennai, Tamil Nadu</p>
+            <p>iste@sathyabama.ac.in</p>
           </div>
         </div>
 
         <div className="footer__bottom">
-          <p>
-            © {new Date().getFullYear()} ISTE-SIST Student Chapter. Made with{' '}
-            <HiHeart className="footer__heart" /> for technical education.
-          </p>
+          <p>© {new Date().getFullYear()} ISTE-SIST Student Chapter</p>
         </div>
       </div>
     </footer>

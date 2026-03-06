@@ -22,12 +22,8 @@ export default function Team() {
     async function fetchTeam() {
       try {
         const { data, error } = await supabase.from('team').select('*').order('order', { ascending: true });
-        if (data && !error && data.length > 0) {
-          setTeam(data);
-        }
-      } catch (e) {
-        // Use fallback data
-      }
+        if (data && !error && data.length > 0) setTeam(data);
+      } catch (e) { /* fallback */ }
     }
     fetchTeam();
   }, []);
@@ -46,8 +42,7 @@ export default function Team() {
             Meet the <span className="gradient-text">Leaders</span>
           </h2>
           <p className="section-description">
-            The passionate individuals driving ISTE-SIST Chapter forward — organizing events,
-            building community, and inspiring the next generation of engineers.
+            The passionate individuals driving ISTE-SIST Chapter forward.
           </p>
         </motion.div>
 
@@ -56,24 +51,24 @@ export default function Team() {
             <motion.div
               key={member.name + i}
               className="team__card"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 + i * 0.08 }}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: 0.15 + i * 0.06 }}
             >
               <div className="team__card-avatar">
                 {member.image_url ? (
                   <img src={member.image_url} alt={member.name} />
                 ) : (
-                  <HiUser size={32} />
+                  <HiUser size={28} />
                 )}
               </div>
-              <h4 className="team__card-name">{member.name}</h4>
-              <p className="team__card-role">{member.role}</p>
-              {member.department && (
-                <span className="team__card-dept">{member.department}</span>
-              )}
-              <div className="team__card-glow" />
+              <div className="team__card-info">
+                <h4 className="team__card-name">{member.name}</h4>
+                <p className="team__card-role">{member.role}</p>
+                {member.department && (
+                  <span className="team__card-dept">{member.department}</span>
+                )}
+              </div>
             </motion.div>
           ))}
         </div>

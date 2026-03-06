@@ -1,61 +1,51 @@
 .team {
-  padding: 8rem 2rem;
-  background: #09090b;
-  position: relative;
+  padding: 6rem 2rem;
+  background: #ffffff;
 }
 
 .team__container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
 .team__header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3.5rem;
 }
 
 .team__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  gap: 1px;
+  background: #e4e4e7;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .team__card {
-  position: relative;
-  background: #18181b;
-  border: 1px solid #27272a;
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
-  text-align: center;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #f8f8f8;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: background 0.3s;
 }
 
 .team__card:hover {
-  background: #1c1c22;
-  border-color: rgba(99, 102, 241, 0.12);
-  transform: translateY(-6px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+  background: #ececec;
 }
 
 .team__card-avatar {
-  width: 84px;
-  height: 84px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #18181b, #27272a);
+  background: #e4e4e7;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 1.25rem;
-  color: #818cf8;
+  color: #a1a1aa;
   overflow: hidden;
-  border: 2px solid #3f3f46;
-  font-size: 1.8rem;
-  transition: border-color 0.3s;
-}
-
-.team__card:hover .team__card-avatar {
-  border-color: #818cf8;
+  flex-shrink: 0;
 }
 
 .team__card-avatar img {
@@ -64,48 +54,30 @@
   object-fit: cover;
 }
 
+.team__card-info {
+  min-width: 0;
+}
+
 .team__card-name {
-  color: #fafafa;
-  font-size: 1.1rem;
+  color: #09090b;
+  font-size: 0.95rem;
   font-weight: 700;
-  margin-bottom: 0.3rem;
-  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-family: 'Syne', sans-serif;
+  margin-bottom: 0.15rem;
 }
 
 .team__card-role {
-  color: #818cf8;
-  font-size: 0.85rem;
+  color: #6366f1;
+  font-size: 0.78rem;
   font-weight: 500;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.35rem;
 }
 
 .team__card-dept {
-  display: inline-block;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  color: #52525b;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid #27272a;
-  padding: 0.25rem 0.8rem;
-  border-radius: 50px;
-}
-
-.team__card-glow {
-  position: absolute;
-  bottom: -50px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  height: 120px;
-  background: radial-gradient(ellipse, rgba(99, 102, 241, 0.05), transparent);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s;
-}
-
-.team__card:hover .team__card-glow {
-  opacity: 1;
+  color: #a1a1aa;
 }
 
 @media (max-width: 900px) {
@@ -117,7 +89,15 @@
 @media (max-width: 640px) {
   .team__grid {
     grid-template-columns: 1fr;
-    max-width: 360px;
-    margin: 0 auto;
   }
 }
+
+/* ── Dark Mode ── */
+.dark .team { background: #09090b; }
+.dark .team__grid { background: #27272a; }
+.dark .team__card { background: #18181b; }
+.dark .team__card:hover { background: #1a1a1e; }
+.dark .team__card-avatar { background: #27272a; color: #71717a; }
+.dark .team__card-name { color: #fafafa; }
+.dark .team__card-role { color: #818cf8; }
+.dark .team__card-dept { color: #71717a; }
