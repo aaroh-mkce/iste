@@ -76,24 +76,6 @@ export function HeroSection() {
           </a>
         </motion.div>
 
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-16 grid grid-cols-3 gap-8 max-w-sm mx-auto"
-        >
-          {[
-            { value: "500+", label: "Members" },
-            { value: "50+", label: "Events" },
-            { value: "10+", label: "Years" },
-          ].map(({ value, label }) => (
-            <div key={label} className="text-center">
-              <div className="text-2xl font-bold text-white font-poppins">{value}</div>
-              <div className="text-white/60 text-xs mt-0.5">{label}</div>
-            </div>
-          ))}
-        </motion.div>
       </div>
 
       {/* Scroll indicator */}

@@ -177,24 +177,21 @@ export function RegistrationForm({ event, onClose }) {
                     <p className="text-xs font-medium text-gray-500 dark:text-white/40">Member {idx + 2}</p>
                     <input
                       type="text"
-                      placeholder="Full Name *"
-                      required
+                      placeholder="Full Name"
                       value={member.name}
                       onChange={(e) => handleMemberChange(idx, "name", e.target.value)}
                       className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 outline-none transition"
                     />
                     <input
                       type="email"
-                      placeholder="Email Address *"
-                      required
+                      placeholder="Email Address"
                       value={member.email}
                       onChange={(e) => handleMemberChange(idx, "email", e.target.value)}
                       className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 outline-none transition"
                     />
                     <input
                       type="text"
-                      placeholder="Register Number *"
-                      required
+                      placeholder="Register Number"
                       value={member.reg_no}
                       onChange={(e) => handleMemberChange(idx, "reg_no", e.target.value)}
                       className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 outline-none transition"
