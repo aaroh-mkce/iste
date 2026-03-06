@@ -96,9 +96,9 @@ export function RegistrationForm({ event, onClose }) {
             {[
               { name: "name", label: "Full Name", type: "text", required: true },
               { name: "email", label: "Email Address", type: "email", required: true },
-              { name: "phone", label: "Phone Number", type: "tel" },
-              { name: "reg_no", label: "Register Number", type: "text" },
-              { name: "college", label: "College / Institution", type: "text" },
+              { name: "phone", label: "Phone Number", type: "tel", required: true },
+              { name: "reg_no", label: "Register Number", type: "text", required: true },
+              { name: "college", label: "College / Institution", type: "text", required: true },
             ].map(({ name, label, type, required }) => (
               <div key={name}>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
@@ -118,25 +118,27 @@ export function RegistrationForm({ event, onClose }) {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                  Department
+                  Department <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   name="department"
                   value={form.department}
                   onChange={handleChange}
+                  required
                   placeholder="e.g. Computer Science"
                   className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 outline-none transition"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                  Year
+                  Year <span className="text-red-500">*</span>
                 </label>
                 <select
                   name="year"
                   value={form.year}
                   onChange={handleChange}
+                  required
                   className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 outline-none transition"
                 >
                   <option value="">Select</option>
@@ -175,21 +177,24 @@ export function RegistrationForm({ event, onClose }) {
                     <p className="text-xs font-medium text-gray-500 dark:text-white/40">Member {idx + 2}</p>
                     <input
                       type="text"
-                      placeholder="Full Name"
+                      placeholder="Full Name *"
+                      required
                       value={member.name}
                       onChange={(e) => handleMemberChange(idx, "name", e.target.value)}
                       className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 outline-none transition"
                     />
                     <input
                       type="email"
-                      placeholder="Email Address"
+                      placeholder="Email Address *"
+                      required
                       value={member.email}
                       onChange={(e) => handleMemberChange(idx, "email", e.target.value)}
                       className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 outline-none transition"
                     />
                     <input
                       type="text"
-                      placeholder="Register Number"
+                      placeholder="Register Number *"
+                      required
                       value={member.reg_no}
                       onChange={(e) => handleMemberChange(idx, "reg_no", e.target.value)}
                       className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 outline-none transition"

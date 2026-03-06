@@ -10,7 +10,7 @@ import AdminRegistrations from './admin/pages/AdminRegistrations';
 import AdminGallery from './admin/pages/AdminGallery';
 import AdminTeam from './admin/pages/AdminTeam';
 import AdminAnnouncements from './admin/pages/AdminAnnouncements';
-import AdminCertificates from './admin/pages/AdminCertificates';
+import AdminSponsors from './admin/pages/AdminSponsors';
 import AdminFeedback from './admin/pages/AdminFeedback';
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
             <Route path="gallery" element={<AdminGallery />} />
             <Route path="team" element={<AdminTeam />} />
             <Route path="announcements" element={<AdminAnnouncements />} />
-            <Route path="certificates" element={<AdminCertificates />} />
+            <Route path="sponsors" element={<AdminSponsors />} />
             <Route path="feedback" element={<AdminFeedback />} />
           </Route>
         </Route>

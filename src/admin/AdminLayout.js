@@ -8,7 +8,7 @@ import {
   PhotoIcon,
   UsersIcon,
   BellIcon,
-  AcademicCapIcon,
+  StarIcon,
   ChatBubbleLeftIcon,
   ClipboardDocumentListIcon,
   Bars3Icon,
@@ -23,7 +23,7 @@ const NAV_ITEMS = [
   { to: "/admin/gallery", icon: PhotoIcon, label: "Gallery" },
   { to: "/admin/team", icon: UsersIcon, label: "Team" },
   { to: "/admin/announcements", icon: BellIcon, label: "Announcements" },
-  { to: "/admin/certificates", icon: AcademicCapIcon, label: "Certificates" },
+  { to: "/admin/sponsors", icon: StarIcon, label: "Sponsors" },
   { to: "/admin/feedback", icon: ChatBubbleLeftIcon, label: "Feedback" },
 ];
 
