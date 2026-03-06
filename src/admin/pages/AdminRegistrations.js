@@ -1,21 +1,24 @@
 import React, { useState, useEffect, useCallback } from "react";
 import supabase from "../../lib/supabaseClient";
 import { SpinnerIcon } from "../../components/Icons";
-import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import { ArrowDownTrayIcon, ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useSearchParams } from "react-router-dom";
 import { format } from "date-fns";
 
 function exportCSV(rows, eventTitle) {
   if (!rows.length) return;
-  const headers = ["Name", "Email", "Phone", "College", "Department", "Year", "Registered At"];
+  const headers = ["Name", "Reg No", "Email", "Phone", "College", "Department", "Year", "Team Members", "Registered At"];
   const csvRows = [
     headers.join(","),
-    ...rows.map((r) =>
-      [r.name, r.email, r.phone, r.college, r.department, r.year,
+    ...rows.map((r) => {
+      const members = Array.isArray(r.team_members)
+        ? r.team_members.map((m) => `${m.name || ""}${m.reg_no ? ` (${m.reg_no})` : ""}`).join("; ")
+        : "";
+      return [r.name, r.reg_no, r.email, r.phone, r.college, r.department, r.year, members,
         format(new Date(r.created_at), "dd/MM/yyyy HH:mm")]
         .map((v) => `"${(v || "").replace(/"/g, '""')}"`)
-        .join(",")
-    ),
+        .join(",");
+    }),
   ];
   const blob = new Blob([csvRows.join("\n")], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
@@ -35,6 +38,9 @@ export function AdminRegistrations() {
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [expanded, setExpanded] = useState({});
+
+  const toggleExpand = (id) => setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
 
   useEffect(() => {
     supabase.from("events").select("id,title").order("event_date", { ascending: false }).then(({ data }) => {
@@ -97,32 +103,70 @@ export function AdminRegistrations() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-white/40 text-xs uppercase border-b border-white/5">
-                  {["Name", "Email", "Phone", "College", "Department", "Year", "Event", "Date"].map((h) => (
+                  <th className="w-8 px-2 py-3"></th>
+                  {["Name", "Reg No", "Email", "Phone", "College", "Dept", "Year", "Event", "Date"].map((h) => (
                     <th key={h} className="text-left px-4 py-3 font-medium">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((r) => (
-                  <tr key={r.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                    <td className="px-4 py-3 text-white font-medium">{r.name}</td>
-                    <td className="px-4 py-3 text-white/70">{r.email}</td>
-                    <td className="px-4 py-3 text-white/60">{r.phone || "—"}</td>
-                    <td className="px-4 py-3 text-white/60">{r.college || "—"}</td>
-                    <td className="px-4 py-3 text-white/60">{r.department || "—"}</td>
-                    <td className="px-4 py-3 text-white/60">{r.year || "—"}</td>
-                    <td className="px-4 py-3">
-                      <span className="px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-300 text-xs">
-                        {r.events?.title || "—"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-white/50 text-xs">
-                      {format(new Date(r.created_at), "dd MMM yyyy")}
-                    </td>
-                  </tr>
-                ))}
+                {filtered.map((r) => {
+                  const hasTeam = Array.isArray(r.team_members) && r.team_members.length > 0;
+                  const isOpen = expanded[r.id];
+                  return (
+                    <React.Fragment key={r.id}>
+                      <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                        <td className="px-2 py-3">
+                          {hasTeam ? (
+                            <button onClick={() => toggleExpand(r.id)} className="text-white/40 hover:text-white transition">
+                              {isOpen ? <ChevronDownIcon className="w-4 h-4" /> : <ChevronRightIcon className="w-4 h-4" />}
+                            </button>
+                          ) : null}
+                        </td>
+                        <td className="px-4 py-3 text-white font-medium">
+                          {r.name}
+                          {hasTeam && (
+                            <span className="ml-2 px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 text-xs">Team</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-white/60">{r.reg_no || "—"}</td>
+                        <td className="px-4 py-3 text-white/70">{r.email}</td>
+                        <td className="px-4 py-3 text-white/60">{r.phone || "—"}</td>
+                        <td className="px-4 py-3 text-white/60">{r.college || "—"}</td>
+                        <td className="px-4 py-3 text-white/60">{r.department || "—"}</td>
+                        <td className="px-4 py-3 text-white/60">{r.year || "—"}</td>
+                        <td className="px-4 py-3">
+                          <span className="px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-300 text-xs">
+                            {r.events?.title || "—"}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-white/50 text-xs">
+                          {format(new Date(r.created_at), "dd MMM yyyy")}
+                        </td>
+                      </tr>
+                      {hasTeam && isOpen && (
+                        <tr className="border-b border-white/5 bg-white/[0.02]">
+                          <td></td>
+                          <td colSpan={9} className="px-6 pb-4 pt-2">
+                            <p className="text-xs text-white/40 uppercase font-medium mb-2">Team Members</p>
+                            <div className="flex flex-wrap gap-2">
+                              {r.team_members.map((m, i) => (
+                                <div key={i} className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-sm">
+                                  <span className="text-white">{m.name || "—"}</span>
+                                  {m.reg_no && (
+                                    <span className="ml-2 text-white/40 text-xs">{m.reg_no}</span>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
                 {filtered.length === 0 && (
-                  <tr><td colSpan={8} className="px-5 py-10 text-center text-white/30">No registrations found.</td></tr>
+                  <tr><td colSpan={10} className="px-5 py-10 text-center text-white/30">No registrations found.</td></tr>
                 )}
               </tbody>
             </table>
