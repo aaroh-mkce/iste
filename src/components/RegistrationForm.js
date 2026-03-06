@@ -4,15 +4,11 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import supabase from "../lib/supabaseClient";
 import toast from "react-hot-toast";
 
-const DEPARTMENTS = [
-  "Computer Science", "Information Technology", "Electronics",
-  "Mechanical", "Civil", "Electrical", "Chemical", "Other"
-];
 const YEARS = ["1st Year", "2nd Year", "3rd Year", "4th Year", "PG"];
 
 export function RegistrationForm({ event, onClose }) {
   const [form, setForm] = useState({
-    name: "", email: "", phone: "", college: "", department: "", year: ""
+    name: "", email: "", phone: "", college: "", department: "", year: "", reg_no: ""
   });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -89,6 +85,7 @@ export function RegistrationForm({ event, onClose }) {
               { name: "name", label: "Full Name", type: "text", required: true },
               { name: "email", label: "Email Address", type: "email", required: true },
               { name: "phone", label: "Phone Number", type: "tel" },
+              { name: "reg_no", label: "Register Number", type: "text" },
               { name: "college", label: "College / Institution", type: "text" },
             ].map(({ name, label, type, required }) => (
               <div key={name}>
@@ -111,15 +108,14 @@ export function RegistrationForm({ event, onClose }) {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                   Department
                 </label>
-                <select
+                <input
+                  type="text"
                   name="department"
                   value={form.department}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 outline-none transition"
-                >
-                  <option value="">Select</option>
-                  {DEPARTMENTS.map((d) => <option key={d} value={d}>{d}</option>)}
-                </select>
+                  placeholder="e.g. Computer Science"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 outline-none transition"
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">

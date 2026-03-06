@@ -8,9 +8,11 @@ import { format } from "date-fns";
 import { Link } from "react-router-dom";
 
 const CATEGORIES = ["Workshop", "Hackathon", "Seminar", "Competition"];
+const EVENT_TYPES = ["Solo", "Team"];
 const EMPTY_FORM = {
   title: "", description: "", event_date: "", location: "",
   poster_image: "", category: "Workshop", registration_link: "", max_participants: 100,
+  reg_no: "", event_type: "Solo",
 };
 
 function EventForm({ initial, onSave, onClose }) {
@@ -81,6 +83,7 @@ function EventForm({ initial, onSave, onClose }) {
               { name: "event_date", label: "Event Date & Time", type: "datetime-local", required: true },
               { name: "max_participants", label: "Max Participants", type: "number" },
               { name: "registration_link", label: "External Registration Link", type: "url" },
+              { name: "reg_no", label: "Registration Number / ID", type: "text" },
             ].map(({ name, label, type, required }) => (
               <div key={name} className={name === "title" ? "md:col-span-2" : ""}>
                 <label className="block text-xs font-medium text-white/60 mb-1.5">{label}</label>
@@ -96,6 +99,13 @@ function EventForm({ initial, onSave, onClose }) {
               <select name="category" value={form.category} onChange={handleChange}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm outline-none focus:ring-2 focus:ring-brand-500/40">
                 {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-white/60 mb-1.5">Event Type</label>
+              <select name="event_type" value={form.event_type} onChange={handleChange}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm outline-none focus:ring-2 focus:ring-brand-500/40">
+                {EVENT_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
             </div>
           </div>
