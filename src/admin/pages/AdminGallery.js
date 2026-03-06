@@ -27,8 +27,8 @@ export function AdminGallery() {
     for (const file of files) {
       const ext = file.name.split(".").pop();
       const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: upErr } = await supabase.storage.from("gallery").upload(path, file, { upsert: true });
-      if (upErr) { toast.error(`Upload failed: ${file.name}`); continue; }
+      const { error: upErr } = await supabase.storage.from("gallery").upload(path, file, { upsert: true, contentType: file.type });
+      if (upErr) { toast.error(`Gallery upload failed: ${upErr.message}`); continue; }
       const { data: urlData } = supabase.storage.from("gallery").getPublicUrl(path);
       const { error: dbErr } = await supabase.from("gallery").insert({
         image_url: urlData.publicUrl,

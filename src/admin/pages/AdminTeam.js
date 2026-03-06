@@ -22,8 +22,8 @@ function MemberForm({ initial, onSave, onClose }) {
     if (!file) return;
     setUploading(true);
     const path = `${Date.now()}.${file.name.split(".").pop()}`;
-    const { error } = await supabase.storage.from("team").upload(path, file, { upsert: true });
-    if (error) { toast.error("Upload failed"); setUploading(false); return; }
+    const { error } = await supabase.storage.from("team").upload(path, file, { upsert: true, contentType: file.type });
+    if (error) { toast.error("Team photo upload failed: " + error.message); setUploading(false); return; }
     const { data } = supabase.storage.from("team").getPublicUrl(path);
     setForm((p) => ({ ...p, image: data.publicUrl }));
     setUploading(false);

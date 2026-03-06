@@ -31,8 +31,8 @@ function EventForm({ initial, onSave, onClose }) {
     setUploading(true);
     const ext = file.name.split(".").pop();
     const path = `${Date.now()}.${ext}`;
-    const { error } = await supabase.storage.from("posters").upload(path, file, { upsert: true });
-    if (error) { toast.error("Upload failed"); setUploading(false); return; }
+    const { error } = await supabase.storage.from("posters").upload(path, file, { upsert: true, contentType: file.type });
+    if (error) { toast.error("Poster upload failed: " + error.message); setUploading(false); return; }
     const { data: urlData } = supabase.storage.from("posters").getPublicUrl(path);
     setForm((p) => ({ ...p, poster_image: urlData.publicUrl }));
     setUploading(false);
