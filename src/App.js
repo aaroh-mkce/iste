@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import HomePage from './pages/HomePage';
 import AdminGuard from './admin/AdminGuard';
@@ -13,13 +13,9 @@ import AdminAnnouncements from './admin/pages/AdminAnnouncements';
 import AdminCertificates from './admin/pages/AdminCertificates';
 import AdminFeedback from './admin/pages/AdminFeedback';
 
-// GitHub Pages deploys under a subdirectory (repo name) if not a user/org page.
-// Using HashRouter via basename avoids 404 on direct navigation.
-const basename = process.env.PUBLIC_URL || '';
-
 function App() {
   return (
-    <BrowserRouter basename={basename}>
+    <HashRouter>
       <Toaster
         position="top-right"
         toastOptions={{
@@ -53,7 +49,7 @@ function App() {
         {/* Fallback */}
         <Route path="*" element={<HomePage />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
     
